@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@500&display=swap');
+
+ion-content ion-toolbar {
+  --background: translucent;
+}
+ion-title{
+  text-align:center;
+}
+a:focus,a:hover{
+   text-decoration: none;
+
+}
+
+ion-card{
+  box-shadow: 0 0 0 0 ;
+  border-bottom: thin solid black;
+  border-radius:0;
+  margin:5% 5%;
+  
+  width:85%;
+}
+ion-avatar{
+  height:90px;
+  width:90px
+}
+ion-row ion-col{
+  color:black;
+}

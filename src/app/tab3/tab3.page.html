@@ -1,0 +1,54 @@
+<ion-header class="dusty-grass-gradient">
+  <div align=center  style=" color:black;  font-family: 'Baloo Tamma 2', cursive; padding:15px;">
+    <span  style="color:black; font-weight: 600; "> My Bag </span>
+    
+  </div>    
+</ion-header>
+
+<ion-content >
+    <ion-text *ngIf="items==undefined" style="font-style: italic; font-size: 15px;" align=center>
+        <h3 > {{displayMsg}} </h3>
+    </ion-text>
+    <ion-card *ngFor="let item of items">
+        <ion-row >
+            <ion-col size=4>
+                <img [src]="item.imgUrl" height=100% width=100% style="padding-top:20%;">
+            </ion-col>
+            <ion-col size=8 style="font-style: italic; font-size: 15px; ">                 
+                <h4 >{{ item.name}} </h4> 
+                <p >{{ item.amount}} &nbsp;&nbsp;&nbsp; &nbsp;Price:   {{" ₹ "+item.cost*item.qty + "/-"}}  </p> 
+      
+      <ion-row>
+        <ion-col size=3>
+          QTY:  
+        </ion-col>
+        <ion-col size=3>
+          {{item.qty}}
+        </ion-col>
+        <ion-col size=3>
+          <ion-icon name="remove-circle" (click)="dqty(item)" color=success style="font-size: 18px;"></ion-icon>
+        </ion-col>
+        <ion-col size=3>
+         <ion-icon (click)="iqty(item)" color=success  name="add-circle" style="font-size: 18px;"></ion-icon>
+        </ion-col>
+       
+      
+      
+      
+    </ion-row>
+        </ion-col>
+    </ion-row>
+    <br>
+</ion-card>
+<ion-card  *ngIf="state">
+  <ion-row>
+    <ion-col sizez=6 style="padding-left:4%">
+      <h4 style="font-style: italic; font-size: 20px; padding:2%; ">  {{"Total : "+ " ₹ " +totalvalue  + "/-" }}</h4> 
+    </ion-col>
+    <ion-col size=6>
+      <ion-button expand=full (click)="confirm()" style="margin:5% 5%" class="dusty-grass-gradient"> Confirm Order  </ion-button>
+    </ion-col>
+    
+  </ion-row>
+</ion-card>    
+</ion-content>

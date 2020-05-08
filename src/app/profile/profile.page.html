@@ -1,0 +1,66 @@
+<ion-header class="dusty-grass-gradient">  
+  
+    <ion-row class="text-center">
+      <ion-col size=2>
+        <ion-buttons>
+        <ion-back-button routerLink="/tabs/tab2"></ion-back-button></ion-buttons>
+      </ion-col>
+      <ion-col size=10  style="margin-left:-7%;">
+        <div style=" color:black;  font-family: 'Baloo Tamma 2', cursive; padding:10px; font-size:18px">
+          <span  style="color:black; font-weight: 600; ">  Contact Us </span>
+          
+        </div>    
+      </ion-col>
+    </ion-row>  
+</ion-header>
+
+<ion-content>
+  <ion-card>
+  <ion-row>
+    <ion-col size=1 class="dusty-grass-gradient"></ion-col>
+    <ion-col size=10>
+  <form (ngSubmit)="savechanges()">
+    <ion-item>
+      <ion-label position=floating><span class="my">Name</span></ion-label>
+      <ion-input type="text" [(ngModel)]="user.displayName" name="displayName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position=floating>Email</ion-label>
+      <ion-input type="text" [(ngModel)]="user.email" name="email"></ion-input>
+    </ion-item>
+    
+    
+    <ion-item>
+      <ion-label position=floating>Phone</ion-label>
+      <ion-input type="text" [(ngModel)]="user.phoneNumber" name="phone"></ion-input>
+    </ion-item>
+    <br>
+    <ion-label position=floating style="margin-left:10%; margin-bottom: 3%; color:lightgreen; font-family: 'Baloo Tamma 2', cursive;">Address</ion-label>
+    <ion-item>
+      <ion-label position=floating>FNO / HNO</ion-label>
+      <ion-input type="text" [(ngModel)]="address.FNO" name="FNO"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position=floating>street1</ion-label>
+      <ion-input type="text" [(ngModel)]="address.street1" name="street1"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position=floating>street2</ion-label>
+      <ion-input type="text" [(ngModel)]="address.street2" name="street2"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position=floating>City</ion-label>
+      <ion-input type="text" [(ngModel)]="address.city" name="city"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position=floating>pincode</ion-label>
+      <ion-input type="text" [(ngModel)]="address.pincode" name="pincode"></ion-input>
+    </ion-item>
+ 
+    <ion-button type="submit" expand=full class="dusty-grass-gradient">save changes</ion-button>
+  </form>
+</ion-col>
+<ion-col size=1 class="dusty-grass-gradient"></ion-col>
+</ion-row>
+</ion-card>
+</ion-content>

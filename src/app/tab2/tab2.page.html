@@ -1,0 +1,89 @@
+<ion-header class="dusty-grass-gradient">
+  <div align=center  style=" color:black;  font-family: 'Baloo Tamma 2', cursive; padding:15px;">
+    <span  style="color:black; font-weight: 600; ">  My Account </span>
+    
+  </div>    
+</ion-header>
+<ion-content [fullscreen]="true" >
+
+  <ion-row style="height:20%">
+    <ion-col size=4 ></ion-col>
+    <ion-col size=4 style="padding-left:8%;"> <ion-avatar> <img src="assets/avatar.jpg" > </ion-avatar> </ion-col>
+    <ion-col size=4></ion-col>
+  </ion-row>
+  
+  <a  routerLink='/profile'>
+    <ion-card>
+      <ion-row>
+        <ion-col size=1>
+          <ion-icon name="person-outline" style="font-size: 20px;"></ion-icon> 
+        </ion-col>
+        <ion-col size=10 style="padding-left:5%; font-family: 'Baloo Tamma 2', cursive;">
+          
+           Edit Profile
+           
+        </ion-col>
+        <ion-col size=1>
+          <ion-icon name="arrow-forward-outline" ></ion-icon>
+        </ion-col>
+        
+    </ion-row>
+    </ion-card> 
+  </a>
+  <a routerLink='/myorders' >
+    <ion-card>
+      <ion-row>
+        <ion-col size=1>
+        <ion-icon name="cube-outline" style="font-size: 20px; "></ion-icon>
+      </ion-col>
+      
+        <ion-col size=10 style="padding-left:5%; font-family: 'Baloo Tamma 2', cursive;">
+          
+            My Orders
+            
+        </ion-col>
+        <ion-col size=1>
+        <ion-icon name="arrow-forward-outline" ></ion-icon>
+      </ion-col>
+        
+    </ion-row>
+    </ion-card></a>
+    <a (click)="changepass()" >
+      <ion-card>
+        <ion-row>
+          <ion-col size=1>
+            <ion-icon name="heart-outline" style="font-size:20px;"></ion-icon>
+        </ion-col>
+        
+          <ion-col size=10 style="padding-left:5%; font-family: 'Baloo Tamma 2', cursive;">
+            
+              My WishList
+              
+          </ion-col>
+          <ion-col size=1>
+          <ion-icon name="arrow-forward-outline" ></ion-icon>
+        </ion-col>
+          
+      </ion-row>
+      </ion-card></a>
+  <a (click)="logout()" *ngIf="state">
+    <ion-card>
+      <ion-row>
+        <ion-col size=1  style="font-size: 20px; ">
+          <ion-icon name="exit-outline"></ion-icon>
+        </ion-col>
+        <ion-col size=10 style="padding-left:5%; font-family: 'Baloo Tamma 2', cursive;">
+          
+            Logout
+          
+        </ion-col>
+        <ion-col size=1>
+            <ion-icon name="arrow-forward-outline" ></ion-icon>
+        </ion-col>
+    </ion-row>
+    </ion-card> </a>
+  
+
+
+  
+</ion-content>

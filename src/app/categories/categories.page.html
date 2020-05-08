@@ -1,0 +1,107 @@
+<ion-header class="dusty-grass-gradient">
+  <div align=center  style=" color:black;  font-family: 'Baloo Tamma 2', cursive; padding:15px;">
+    <span  style="color:black; font-weight: 600; ">  Categories </span>
+    
+  </div>    
+</ion-header>
+
+<ion-content>
+<!--Navbar-->
+<nav class="navbar navbar-dark navbar-3 dusty-grass-gradient mb-4">
+
+  <!-- Navbar brand -->
+  <a class="navbar-brand" ><h4>Farm Fresh Vegetables</h4></a>
+
+  <!-- Collapse button -->
+  <button class="navbar-toggler collapsed" type="button" id=bacha1 data-target="#navbarSupportedContent13" aria-controls="navbarSupportedContent13" 
+  aria-expanded="true" (click)="toggle1()" aria-label="Toggle navigation" ><i class="fa fa-plus" *ngIf="fafa1" ></i><i class="fa fa-times" *ngIf="!fafa1"></i></button>
+
+  <!-- Collapsible content -->
+  <div [ngClass]="this.class1" id="navbarSupportedContent13"  >
+
+    <!-- Links -->
+    <ul class="navbar-nav mr-auto">
+      
+      <li class="nav-item">
+        <a class="nav-link waves-effect waves-dark" (click)="organicVegetable()" > Organic </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-effect waves-dark" (click)="nonOrganicVegetable()"> Non Organic </a>
+      </li>
+    </ul>
+    <!-- Links -->
+
+  </div>
+  <!-- Collapsible content -->
+
+</nav>
+<nav class="navbar navbar-dark navbar-3 dusty-grass-gradient mb-4">
+
+  <!-- Navbar brand -->
+  <a class="navbar-brand"><h4>Farm Fresh Fruits</h4></a>
+
+  <!-- Collapse button -->
+  <button class="navbar-toggler collapsed" id=bacha type="button" data-target="#navbarSupportedContent14" aria-controls="navbarSupportedContent14" aria-expanded="true" 
+  aria-label="Toggle navigation" (click)="toggle()"><i class="fa fa-plus" *ngIf="fafa" ></i><i class="fa fa-times" *ngIf="!fafa"></i></button>
+
+  <!-- Collapsible content -->
+  <div  [ngClass]="this.class" id="navbarSupportedContent14"  >
+
+    <!-- Links -->
+    <ul class="navbar-nav mr-auto">
+      
+      <li class="nav-item">
+        <a class="nav-link waves-effect waves-dark" (click)="organicFruit()"> Organic </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-effect waves-dark" (click)="nonOrganicFruit()"> Non Organic </a>
+      </li>
+    </ul>
+    <!-- Links -->
+
+  </div>
+  <!-- Collapsible content -->
+
+</nav>
+<nav class="navbar navbar-dark navbar-3 dusty-grass-gradient mb-4">
+
+  <!-- Navbar brand -->
+  <a class="navbar-brand"><h4>Organic Groceries</h4></a>
+
+  <!-- Collapse button -->
+  <button class="navbar-toggler collapsed" id=bacha2 type="button" data-target="#navbarSupportedContent14" aria-controls="navbarSupportedContent14" aria-expanded="true" 
+  aria-label="Toggle navigation" (click)="toggle2()"><i class="fa fa-plus" *ngIf="fafa2" ></i><i class="fa fa-times" *ngIf="!fafa2"></i></button>
+
+  <!-- Collapsible content -->
+  <div  [ngClass]="this.class2" id="navbarSupportedContent14"  >
+
+    <!-- Links -->
+    <p>Will be available soon</p>
+    <!-- Links -->
+
+  </div>
+  <!-- Collapsible content -->
+
+</nav>
+
+
+
+<div  class="navbar dusty-grass-gradient" >
+
+  <!-- Links -->
+  
+  <ul class="navbar-nav mr-auto" style="width:100%">
+    
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-dark" (click)="organicSnack()"><h4> Healthy Snacks </h4> </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-dark" (click)="organicDryFruit()"><h4> Dry Fruits  </h4></a>
+    </li>
+  </ul>
+  <!-- Links -->
+
+</div>
+
+
+</ion-content>

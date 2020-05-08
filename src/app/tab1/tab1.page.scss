@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@500&display=swap');
+ion-content ion-toolbar {
+  --background: translucent;
+}
+
+ion-title{
+  font-family: 'Baloo Tamma 2', cursive;
+  color:black
+}
+ion-button{
+  font-size:12px;
+  
+}
+
+.carz{
+  box-shadow: 0 0 2px 2px rgba(0,0,0,0.2);
+  border-radius:0.3rem;
+}
+ion-icon{
+  font-size:20px;
+}
+.myclass{
+  background: transparent;
+  box-shadow: none;
+  opacity: 0.9;
+}
+
+ol li{
+  padding:2%;
+  font-size: 12px;
+  color:black;
+  font-family: 'Baloo Tamma 2', cursive;
+}
+ion-row ol{
+  padding-top:4%;
+}
+

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "295320884401",
+    "firebase_url": "https://ioniclogin-273507.firebaseio.com",
+    "project_id": "ioniclogin-273507",
+    "storage_bucket": "ioniclogin-273507.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295320884401:android:0ba304b7dfae19db25fe90",
+        "android_client_info": {
+          "package_name": "com.IonicApp.rrr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295320884401-u9ju6sd3uik0b8g140cpig2lt0alnm6l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.IonicApp.rrr",
+            "certificate_hash": "2cff7f094ea19f2d4d17ce86ce27e0aa4ac60eeb"
+          }
+        },
+        {
+          "client_id": "295320884401-nfp4k7s2qmbhrlv5mbcpj73r0busv1u6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnEZdSTsVj4tEa69LYUgmBQBTTZaguT_8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "295320884401-nfp4k7s2qmbhrlv5mbcpj73r0busv1u6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
