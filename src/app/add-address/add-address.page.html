@@ -1,12 +1,17 @@
-<ion-header [translucent]="true" >
-  <ion-toolbar color="success">
-    <ion-buttons slot=end>
-        <a (click)=cancel()> cancel </a>
-  </ion-buttons>
-    <ion-title align=center>
-      Add Address
-    </ion-title>
-  </ion-toolbar>
+<ion-header class="dusty-grass-gradient">  
+  
+  <ion-row class="text-center">
+    
+    <ion-col size=10  >
+      <div style=" color:black;  font-family: 'Baloo Tamma 2', cursive; padding:10px; font-size:18px; ">
+        <span  style="color:black; font-weight: 600; "> Add Address</span>
+        
+      </div>    
+    </ion-col>
+    <ion-col size=2 style="margin-top:0.5rem; ">
+        <a (click)="cancel()" style="font-size: 15px; color:black">cancel</a>
+    </ion-col>
+  </ion-row>  
 </ion-header>
 <ion-content>
   <ion-item>
@@ -26,6 +31,12 @@
     <ion-input type="text" [(ngModel)]="User.address.street2" name="street2"></ion-input>
   </ion-item>
   <ion-item>
+    <ion-label position=floating>Location</ion-label>
+    <ion-select placeholder="{{User.address.location}}" [(ngModel)]="User.address.location" name="location" (ngModelChange)="call()">
+      <ion-select-option *ngFor="let i of location" [value]="i">{{i}}</ion-select-option>        
+    </ion-select>
+  </ion-item>
+  <ion-item>
     <ion-label position=floating>City</ion-label>
     <ion-input type="text" [(ngModel)]="User.address.city" name="city"></ion-input>
   </ion-item>
@@ -33,5 +44,5 @@
     <ion-label position=floating>pincode</ion-label>
     <ion-input type="text" [(ngModel)]="User.address.pincode" name="pincode"></ion-input>
   </ion-item>
-  <ion-button (click)=save() expand=full color=success>Add Address</ion-button>
+  <ion-button (click)=save() expand=full class="dusty-grass-gradient">Add Address</ion-button>
 </ion-content>

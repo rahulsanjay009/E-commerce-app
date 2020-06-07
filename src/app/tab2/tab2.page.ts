@@ -19,7 +19,7 @@ export class Tab2Page {
   usersRef = firebase.database().ref('users/');
   state:Boolean=false;
   temp:User[]=[];
-  constructor(private router:Router,private modal:ModalController,private ld:LoadingController,private s:Storage,
+  constructor(private router:Router,private modal:ModalController,private ld:LoadingController,private s:Storage,private alertCtrl:AlertController,
     private gplus:GooglePlus,private as:AuthService,private alertController:AlertController,private storage:Storage) {
     this.as.authstate.subscribe(state=>{
       if(!state)
@@ -44,32 +44,53 @@ export class Tab2Page {
   }
 
 async logout(){
-  const load=await this.ld.create({
-    message:"logging out...",
-    spinner:"circular"
+  let alert = this.alertCtrl.create({
+    message: 'Are you sure you want to Logout',
+ 
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        handler: data => {
+          console.log('Cancel clicked');
+        }
+      },
+      {
+        text: 'Logout',
+        handler: async data => {
+          const load=await this.ld.create({
+            message:"logging out...",
+            spinner:"circular"
+          });
+          await load.present();
+            this.as.logout();
+            this.storage.remove('ITEMS');
+            this.as.authstate.subscribe((state)=>{
+              this.state=state;
+            })
+            
+            firebase.auth().signOut().then((res)=>{
+              setTimeout(async ()=>{
+                this.router.navigate(['/start']);
+                this.as.logout();
+                
+                const alert = await this.alertController.create({
+                  header: '',
+                  message: 'Logged out succcessfully',
+                  buttons: ['OK']
+                });
+                load.dismiss();
+                await alert.present();                
+              },2000);
+                
+            })
+        }
+      }
+    ]
+  }).then((da)=>{
+    da.present();
   });
-  await load.present();
-    this.as.logout();
-    this.storage.remove('ITEMS');
-    this.as.authstate.subscribe((state)=>{
-      this.state=state;
-    })
-    
-    firebase.auth().signOut().then((res)=>{
-      setTimeout(async ()=>{
-        this.router.navigate(['/start']);
-        this.as.logout();
-        
-        const alert = await this.alertController.create({
-          header: '',
-          message: 'Logged out succcessfully',
-          buttons: ['OK']
-        });
-        await alert.present();
-        load.dismiss();
-      },1000);
-        
-    })
+  
     
   }
   changepass(){

@@ -14,10 +14,14 @@ import { IonicStorageModule } from '@ionic/storage';
 import { AddAddressPage } from './add-address/add-address.page';
 import { ChangepassComponent } from './changepass/changepass.component';
 import {CallNumber} from '@ionic-native/call-number/ngx';
+import { OurstoryComponent } from './ourstory/ourstory.component';
+import { ReviewsComponent } from './reviews/reviews.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
-  declarations: [AppComponent,AddAddressPage,ChangepassComponent],
-  entryComponents: [ChangepassComponent,AddAddressPage],
+  declarations: [AppComponent,AddAddressPage,ChangepassComponent,OurstoryComponent,ReviewsComponent],
+  entryComponents: [ChangepassComponent,AddAddressPage,OurstoryComponent,ReviewsComponent],
   imports: [BrowserModule, IonicModule.forRoot(),
   AppRoutingModule,
   FormsModule,
@@ -25,6 +29,7 @@ import {CallNumber} from '@ionic-native/call-number/ngx';
   IonicModule.forRoot(),
   IonicStorageModule.forRoot(),
   MDBBootstrapModule.forRoot(),
+  ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     
 ],
   providers: [

@@ -17,9 +17,11 @@ import { AddAddressPage } from '../add-address/add-address.page';
 })
 export class Tab3Page implements OnInit {
   items:Item[]=[];
+  payment:string=null;
   displayMsg='';
   totalvalue:number=0;
   state:boolean=false;
+  size=[0.25,0.5,0.75,1,1.5,2,2.5,3,3.5,4,4.5,5];
   usersRef = firebase.database().ref('users');
   uid=firebase.auth().currentUser.uid;
   temp:Item[]=[];
@@ -29,6 +31,7 @@ export class Tab3Page implements OnInit {
       
   }
   ionViewDidEnter(){
+    
     this.totalvalue=0;
 
      this.load.create({  
@@ -45,7 +48,7 @@ export class Tab3Page implements OnInit {
       this.storage.get('auth-token').then((data)=>{
         firebase.database().ref('users').child(data.uid).orderByValue().once("value",(data)=>{
             this.items=data.val().cart
-            console.log(this.items);
+            
             
             
             if(this.items==undefined){
@@ -57,8 +60,11 @@ export class Tab3Page implements OnInit {
             this.items.forEach((x)=>{
               firebase.database().ref('items').child(x.name).on("value",(y)=>{
                 x.cost=y.val().cost;
-                this.totalvalue+=Number(x.cost)*x.qty;
-                console.log("function called....")
+                this.totalvalue=0;
+                this.items.forEach((j)=>{
+                  this.totalvalue+=Number(j.cost)*j.qty*j.subqty;
+                })                
+                
               })                
             })
           }
@@ -82,16 +88,28 @@ export class Tab3Page implements OnInit {
     const utcDate1 = new Date(Date.now());
     this.temp=[];
     var date:string=utcDate1.toLocaleString("en-IN",{timeZone:'Asia/Kolkata'});
+    var totalVal=0;
     this.items.forEach((data)=>{
       data.orderedTimestamp=date;
       data.delivered=false;
+      totalVal+=Number(data.cost)*data.qty*data.subqty;
       firebase.database().ref('items').child(data.name).on("value",(da)=>{
           data.cost=da.val().cost;
-          console.log(da.val().cost);
+          
       })
 
     })
-    
+    if(totalVal<200){
+        this.alertController.create({
+          message:"Your order is below Rs. 200/-",
+        }).then((da)=>{ da.present()});
+    }
+    else if(this.payment==null){
+      this.alertController.create({
+        message:"Please Select a Payment Mode!",
+      }).then((da)=>{ da.present()});
+    }
+    else{
     this.load.create({  
       spinner:null,
       cssClass:'myclass',
@@ -110,11 +128,11 @@ export class Tab3Page implements OnInit {
           this.temp=data.val().confirmedOrders;
           add=data.val().address;
           phne=data.val().phoneNumber;
-          console.log(this.items) ;
+          
           this.temp.push(...this.items);
        }).then(()=>{            
         
-        if(user.address.FNO==''||user.address.street1==''||user.address.street2==''||user.address.city==''||user.address.pincode==''){
+        if(user.address.FNO==''||user.address.street1==''||user.address.street2==''||user.address.city==''||user.address.pincode==''||user.address.location==undefined){
         setTimeout(async ()=>{
           Loading.dismiss();
           const mod=await this.modal.create({
@@ -129,39 +147,43 @@ export class Tab3Page implements OnInit {
        else{
         
         
-          this.storage.get('ITEMS').then((d)=>{
+          
             
-            d.forEach((i)=>{
+            this.items.forEach((i)=>{
               
               var q;
-              firebase.database().ref('items').child(i.name).once('value',(d)=>{
-                if(d.val().quantity==undefined){
-                      q=i.qty;
-                      firebase.database().ref('items').child(i.name).update({
-                        quantity:q
-                      })
-                }
-                else{
-                  q=i.qty+d.val().quantity;
-                  firebase.database().ref('items').child(i.name).update({
-                    quantity:q
-                  })
-                }
-              })
+              if(!i.delivered){
+                firebase.database().ref('items').child(i.name).once('value',(d)=>{
+                  if(d.val().quantity==undefined){
+                        q=i.qty*i.subqty;
+                        firebase.database().ref('items').child(i.name).update({
+                          quantity:q
+                        })
+                  }
+                  else{
+                    q=(i.qty*i.subqty)+d.val().quantity;
+                    firebase.database().ref('items').child(i.name).update({
+                      quantity:q
+                    })
+                  }
+                })
+              }
             })
-         }).then(()=>{
+       
                     
                 this.usersRef.child(user.uid).update({
                   confirmedOrders: this.temp,
-                  cart:[]
+                  cart:[],
+                  paymentMode:this.payment
                 }).then((res)=>{
                   this.storage.remove('ITEMS');
                   this.items=[];
-                  console.log("confirmed " + res)}).catch((err)=>{console.log(err)});
+                  }).catch((err)=>{console.log(err)});
                 
                 this.temp=[];
                 this.ss.confirmed();
-               
+                this.payment=null;
+                this.storage.remove('ITEMS');
                 Loading.dismiss();
                 this.router.navigate(['/myorders']);
                 setTimeout(async ()=>{
@@ -174,91 +196,184 @@ export class Tab3Page implements OnInit {
                   });
                   
                   await alert.present();
-                },100)  
-
-         })     
-        
-       
-
-       
-       } 
-      
-      }) 
-      })
-    })     
-   
+                },100) 
+              
+              
+              }
+            });
+        });
+       });  
+    }
   }
 
-   dqty(item){
-      if(item.qty-1 < 1){
-        item.qty = 0;
-        var x;
-        console.log('item_1->' + item.qty)
-        this.ss.deleteItem(item,'ITEMS').then((da)=>{
-          console.log('dqty..');
-          this.ss.getItems('ITEMS').then((dt)=>{
-              this.items=dt;
-          })
-          this.totalvalue=this.totalvalue-Number(item.cost);
+
+  dqty(item){
+    this.totalvalue=this.totalvalue-Number(item.cost)*item.subqty;
+    if(item.subqty-0.25 < 0.25&&item.amount.split(' ')[1].toLowerCase()=='kg'){
+      item.qty = 0;
+      item.subqty=this.size[3];
+      
+      console.log('item_1->' + item.qty)
+      firebase.database().ref('users').child(this.uid).once("value",data=>{
+        let x=[];
+        x=data.val().cart;
+        x=x.filter((i)=>{
+          if(i.name!=item.name)
+            return x;
+        })
+        this.items=x;
+        firebase.database().ref('users').child(this.uid).update({
+          cart:x
         })  
-        
+    })    
+      
+    }
+    else if(item.amount.split(' ')[1].toLowerCase()!='kg'&&item.subqty-1<1){
+      item.qty = 0;
+      item.subqty=this.size[3];
+      firebase.database().ref('users').child(this.uid).once("value",data=>{
+        let x=[];
+        x=data.val().cart;
+        x=x.filter((i)=>{
+          if(i.name!=item.name)
+            return x;
+        })
+        this.items=x;
+        firebase.database().ref('users').child(this.uid).update({
+          cart:x
+        })  
+      });
+    }
+    else{
+      if(item.amount.split(' ')[1].toLowerCase()=='kg'){
+        item.qty=1;
+        item.subqty=this.size[this.size.indexOf(item.subqty)-1];
+    }
+    else{
+      item.qty=1;
+      item.subqty--;
+    }
+    firebase.database().ref('users').child(this.uid).once("value",data=>{
+      let x=[];
+      x=data.val().cart;
+      x.map((i)=>{
+        if(i.name==item.name){
+          i.name=item.name;
+          i.qty=item.qty;
+          i.subqty=item.subqty;
+        }
+      })
+        firebase.database().ref('users').child(this.uid).update({
+          cart:x
+        })  
+      })
+    } 
+	this.totalvalue=this.totalvalue+Number(item.cost)*item.subqty;
+}
+
+iqty(item){
+  this.totalvalue=this.totalvalue-Number(item.cost)*item.subqty;
+  if(item.qty==0){
+      if(item.amount.split(' ')[1].toLowerCase()=='kg'){
+        item.qty=1;
+        item.subqty=this.size[this.size.indexOf(item.subqty)];
       }
       else{
-        item.qty -= 1;
-        var x;
-        console.log('item_2->' + item.qty);
-        firebase.database().ref('items').child(item.name).on("value",(k)=>{
-            item.cost=k.val().cost;
-            this.ss.updateItem(item,'ITEMS').then((da)=>{
-              console.log('dqty...')
-              this.totalvalue=this.totalvalue-Number(item.cost);
-            })
-        }) 
-      } 
-      
-      
-  }
-ionViewWillLeave(){
-  let x=[];
-  this.ss.getItems('ITEMS').then((data)=>{
-    x=data;
-    this.storage.get('auth-token').then((data:User)=>{
-      
-
-      firebase.database().ref('users').child(data.uid).update({
-                    
-            cart:x
-      }).then((res)=>{console.log("data set ", res)})
-    }).then(()=>{ console.log("updated...")})
- })
-}
-  iqty(item){
-    if(item.qty==0){
+        item.subqty=1;
         item.qty=1;
-        firebase.database().ref('items').child(item.name).on("value",(k)=>{
-          item.cost=k.val().cost;
-          this.ss.addItem(item,'ITEMS').then(()=>{
-            this.totalvalue=this.totalvalue+Number(item.cost);
-          });
-      })
-        
-        
-      }
-    else{
-    item.qty+=1;
-    
-    firebase.database().ref('items').child(item.name).on("value",(k)=>{
-      item.cost=k.val().cost;
-      this.ss.updateItem(item,'ITEMS').then((data)=>{
-        console.log("iqty..");  
-        this.totalvalue=this.totalvalue+Number(item.cost);
-      })
-  }) 
-    
-    
-  } 
-
+      }        
+        firebase.database().ref('users').child(this.uid).once("value",data=>{
+            let x=[];
+            x=data.val().cart;
+            if(x==undefined)
+              x=[];
+            x.push(item);
+            firebase.database().ref('users').child(this.uid).update({
+              cart:x
+            })  
+        })    
+    }
+  else{
+  if(item.amount.split(' ')[1].toLowerCase()=='kg'){
+    item.qty=1;
+    if(item.subqty==5)
+        item.subqty=this.size[this.size.length-1];
+    else
+      item.subqty=this.size[this.size.indexOf(item.subqty)+1];
   }
+  else{
+    item.qty=1;
+    item.subqty++; 
+  }
+  firebase.database().ref('users').child(this.uid).once("value",data=>{
+    let x=[];
+    
+    if(data.val().cart!=undefined)
+      { 
+          x=data.val().cart;
+          x.map((i)=>{
+            if(i.name==item.name){
+              i.name=item.name;
+              i.qty=item.qty;
+              i.subqty=item.subqty;
+            }
+          })
+      }
+      else{
+          x.push(item);
+      }
+      firebase.database().ref('users').child(this.uid).update({
+        cart:x
+      })  
+    })
+  }  
+this.totalvalue=this.totalvalue+Number(item.cost)*item.subqty;
+}
 
+
+optionsFn(event){
+ this.payment=event.target.value; 
+}
+change(ref,item:Item){
   
+  item.subqty=ref;
+  if(item.qty>0)
+      this.ss.updateItem(item,'ITEMS').then(()=>{
+        var x;
+        this.ss.getItems('ITEMS').then((data)=>{
+          x=data;
+          this.storage.get('auth-token').then((data)=>{
+            firebase.database().ref('users').child(data.uid).update({
+                  cart:x
+            }).then(()=>{
+                this.totalvalue=0
+              this.items.forEach((data)=>{
+                this.totalvalue+=Number(data.cost)*data.qty*data.subqty;});
+            })
+          })
+       })
+      })  
+  }
+  rmve(item){
+    let x=[];
+    
+    firebase.database().ref('users').child(this.uid).once("value",data=>{
+      
+      x=data.val().cart;
+      x=x.filter((i)=>{
+        if(i.name!=item.name)
+          return x;
+      })
+      firebase.database().ref('users').child(this.uid).update({
+        cart:x
+      })  
+    }).then(()=>{
+      item.qty=0;
+      item.subqty=1;  
+      this.items=x;
+      this.totalvalue=0;
+      this.items.forEach((j)=>{
+          this.totalvalue+=Number(j.cost)*j.qty*j.subqty;})
+      })    
+    }
 }

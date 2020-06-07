@@ -12,35 +12,41 @@
     <ion-card *ngFor="let item of items">
         <ion-row >
             <ion-col size=4>
-                <img [src]="item.imgUrl" height=100% width=100% style="padding-top:20%;">
+                <img [src]="item.imgUrl" height=70% width=100% style="margin-top:20%;">
             </ion-col>
             <ion-col size=8 style="font-style: italic; font-size: 15px; ">                 
-                <h4 >{{ item.name}} </h4> 
-                <p >{{ item.amount}} &nbsp;&nbsp;&nbsp; &nbsp;Price:   {{" ₹ "+item.cost*item.qty + "/-"}}  </p> 
+                <h5 >{{ item.name}} </h5>               
+          <p style="font-size:14px" *ngIf="item.amount.split(' ')[1]=='Kg'"> {{item.subqty}}    {{item.amount.split(' ')[1]}}  &nbsp; | &nbsp; {{" unit price : "+" ₹ "+item.cost+"/-"}}</p>
+          <p style="font-size:14px" *ngIf="item.amount.split(' ')[1]!='Kg'">{{item.subqty}}   {{item.amount.split(' ')[1]}}   &nbsp; | &nbsp; {{" unit price : "+" ₹ "+item.cost+"/-"}}</p>
+           <p style="font-size:14px"> Sub total :   {{" ₹ "+item.cost*item.subqty + "/- " }}  </p> 
       
-      <ion-row>
-        <ion-col size=3>
-          QTY:  
-        </ion-col>
-        <ion-col size=3>
-          {{item.qty}}
-        </ion-col>
-        <ion-col size=3>
-          <ion-icon name="remove-circle" (click)="dqty(item)" color=success style="font-size: 18px;"></ion-icon>
-        </ion-col>
-        <ion-col size=3>
-         <ion-icon (click)="iqty(item)" color=success  name="add-circle" style="font-size: 18px;"></ion-icon>
-        </ion-col>
-       
-      
-      
-      
-    </ion-row>
+      <ion-row style="margin-top:-8%;">
+        <ion-col size=3 >
+          <ion-icon (click)="dqty(item)" name="remove-circle" color=success></ion-icon>
+       </ion-col>
+       <ion-col size=3  align=center>
+         <ion-icon name="add-circle" (click)="iqty(item)" color=success></ion-icon>
+     </ion-col>
+     <ion-col size=6  align=center>
+       <ion-icon name="trash" (click)="rmve(item)" color=success></ion-icon>
+     </ion-col>       
+        </ion-row>
         </ion-col>
     </ion-row>
     <br>
 </ion-card>
 <ion-card  *ngIf="state">
+  
+    <ion-item>
+      <ion-label>Payment</ion-label>
+      <ion-select value="payment" interface="popover" (ionChange)="optionsFn($event);">
+        <ion-select-option value="cod">cash on delivery</ion-select-option>
+        <ion-select-option value="Phonepe">Phone Pe</ion-select-option>
+        <ion-select-option value="Gpay">Google pay</ion-select-option>
+        <ion-select-option value="Netbanking">Net Banking</ion-select-option>
+      </ion-select>
+    </ion-item> <br>
+  
   <ion-row>
     <ion-col sizez=6 style="padding-left:4%">
       <h4 style="font-style: italic; font-size: 20px; padding:2%; ">  {{"Total : "+ " ₹ " +totalvalue  + "/-" }}</h4> 

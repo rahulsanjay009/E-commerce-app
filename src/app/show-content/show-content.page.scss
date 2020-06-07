@@ -11,3 +11,11 @@ ion-text{
   ion-label h2 .fas{
     color:red;
   }
+  .carz{
+    box-shadow: 0 0 2px 2px rgba(0,0,0,0.2);
+    border-radius:0.3rem;
+  }
+  ion-toolbar{
+    --min-height:12px;
+    padding-bottom:10px;
+  }

@@ -22,18 +22,27 @@ export class ProfilePage implements OnInit {
   passwordIcon: string = 'eye-off';
   usersRef = firebase.database().ref('users');
   data:any[];
+  location=['kukatpally','KPHB','Nizampet']
+  loc:string;
   constructor(private as:AuthService, private s:Storage,private ld:LoadingController,private router:Router,
     private alertController:AlertController) { 
    
   }
 
   ngOnInit() {
+    this.location=[];
+    firebase.database().ref('locations').child('location').once("value",(d)=>{      
+          this.location=d.val()
 
-    
-    
+    })
+    console.log(this.address.location)
       
   }
+  call(){
+    console.log(this.address.location)
+  }
   ionViewWillEnter(){
+    
     this.s.get('auth-token').then((user)=>{
       
       this.user=user;

@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import {User} from 'models/user';
 import {LoadingController, AlertController} from '@ionic/angular';
 import * as firebase from 'firebase';
-import {} from 'firebase-admin';
+
 import {Router} from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { Storage } from '@ionic/storage';
+
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { environment } from 'src/environments/environment';
+import { Storage } from '@ionic/storage';
 
 
 
@@ -27,7 +29,7 @@ export class StartPage implements OnInit {
 
 
   constructor(private ld:LoadingController,private as:AuthService,private router:Router,private splashScreen: SplashScreen,
-    private alertController:AlertController) { 
+    private alertController:AlertController,private storage:Storage) { 
         
   }
  
@@ -44,7 +46,13 @@ export class StartPage implements OnInit {
       });
     
   }
-  
+  ionViewDidEnter(){
+    this.as.authstate.subscribe((state)=>{
+        if(state){
+            this.router.navigate(['/tabs/tab1']);
+        }
+    })
+  }
  async sendotp(){
   let phone:string=this.phone;
   const load=await this.ld.create({
@@ -67,7 +75,17 @@ export class StartPage implements OnInit {
       await alert.present();
       load.dismiss();
     });
-  }).catch((err)=>{ console.log(err); alert(err); }).finally(()=>{ load.dismiss();})
+  }).catch((err)=>{  
+    this.alertController.create({
+      header: '',
+      message: 'Please check the number and try Again',
+      buttons: ['OK']
+    }).then((l)=>{
+      l.present();
+      load.dismiss();
+    });
+    
+  }).finally(()=>{ load.dismiss();})
 
 
 
@@ -83,7 +101,7 @@ export class StartPage implements OnInit {
     load.present();
     if(this.code==null)
         load.dismiss();
-  
+
     this.windowRef.confirmationResult.confirm(this.code).then((result)=>{
     
       this.user.displayName = result.user.displayName;
@@ -91,22 +109,21 @@ export class StartPage implements OnInit {
       this.user.email = result.user.email;
       this.user.phoneNumber=result.user.phoneNumber;
       
-      this.user.address={FNO:'',street1:'',street2:'',city:'',pincode:''}
+      this.user.address={FNO:'',street1:'',street2:'',city:'',pincode:'',location:''}
       this.user.confirmedOrders=[];
 
       this.usersRef.child(this.user.uid).once("value",data=>{
 
         var val=data.val();
-        console.log(val);
+        
         if(val!=null){
         
         this.user.displayName=val.displayName,
         this.user.email=val.email;
-        if(this.user.address.FNO!=undefined||this.user.address.street1!=undefined||this.user.address.street2!=undefined||this.user.address.city!=undefined||this.user.address.pincode!=undefined)
+        if(this.user.address.FNO!=undefined||this.user.address.street1!=undefined||this.user.address.street2!=undefined||this.user.address.city!=undefined||this.user.address.pincode!=undefined||this.user.address.location!=undefined)
             this.user.address=val.address;
         if(this.user.confirmedOrders!=undefined)
-            this.user.confirmedOrders=val.confirmedOrders;
-        
+            this.user.confirmedOrders=val.confirmedOrders;        
       }
       else{
        this.usersRef.child(this.user.uid).update({
@@ -121,22 +138,24 @@ export class StartPage implements OnInit {
         
       }).catch((err)=>{
         load.present();
-        console.log("not uploaded "+err);  alert("Failed verification  "); 
+        alert("Failed verification  "); 
       });
     }
+    this.storage.remove('ITEMS');
     this.as.login(this.user).then(()=>{
+      
       this.router.navigate(['tabs']);
     });
     
     
     
-      console.log("data fixed...");
+      
     }); 
       
        
         
       
-    }).catch((err)=>{ load.dismiss(); console.log(err); 
+    }).catch((err)=>{ load.dismiss(); 
       this.alertController.create({
         header: '',
         message: 'Incorrect otp',

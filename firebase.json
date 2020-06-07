@@ -1,8 +1,7 @@
 {
-  
   "hosting": {
-    "site": "rahul1",
     "public": "www",
+    "site":"rahul1",
     "ignore": [
       "firebase.json",
       "**/.*",

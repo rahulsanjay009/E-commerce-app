@@ -13,16 +13,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-address.page.scss'],
 })
 export class AddAddressPage implements OnInit {
- 
+  location=['kukatpally','KPHB','Nizampet']
     @Input() User:User;
     constructor(private as:AuthService,private modal:ModalController,private storage:Storage,private router:Router) { }
     
     ngOnInit() {
- 
+      this.location=[];
+      firebase.database().ref('locations').child('location').once("value",(d)=>{      
+            this.location=d.val()  
+      })
     }
     
     save(){
-      console.log(this.User.address);
+      
       this.storage.get('auth-token').then((data)=>{
         firebase.database().ref('users').child(data.uid).update({
             displayName:this.User.displayName,

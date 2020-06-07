@@ -63,27 +63,21 @@
   <!-- Collapsible content -->
 
 </nav>
-<nav class="navbar navbar-dark navbar-3 dusty-grass-gradient mb-4">
 
-  <!-- Navbar brand -->
-  <a class="navbar-brand"><h4>Organic Groceries</h4></a>
+<div  class="navbar dusty-grass-gradient" >
 
-  <!-- Collapse button -->
-  <button class="navbar-toggler collapsed" id=bacha2 type="button" data-target="#navbarSupportedContent14" aria-controls="navbarSupportedContent14" aria-expanded="true" 
-  aria-label="Toggle navigation" (click)="toggle2()"><i class="fa fa-plus" *ngIf="fafa2" ></i><i class="fa fa-times" *ngIf="!fafa2"></i></button>
+  <!-- Links -->
+  
+  <ul class="navbar-nav mr-auto" style="width:100%">
+    
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-dark" (click)="organicGroceries()"><h4> Organic Groceries </h4> </a>
+    </li>
+   
+  </ul>
+  <!-- Links -->
 
-  <!-- Collapsible content -->
-  <div  [ngClass]="this.class2" id="navbarSupportedContent14"  >
-
-    <!-- Links -->
-    <p>Will be available soon</p>
-    <!-- Links -->
-
-  </div>
-  <!-- Collapsible content -->
-
-</nav>
-
+</div>
 
 
 <div  class="navbar dusty-grass-gradient" >
@@ -95,13 +89,26 @@
     <li class="nav-item">
       <a class="nav-link waves-effect waves-dark" (click)="organicSnack()"><h4> Healthy Snacks </h4> </a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link waves-effect waves-dark" (click)="organicDryFruit()"><h4> Dry Fruits  </h4></a>
-    </li>
+   
   </ul>
   <!-- Links -->
 
 </div>
 
+<div  class="navbar dusty-grass-gradient" >
+
+  <!-- Links -->
+  
+  <ul class="navbar-nav mr-auto" style="width:100%">
+    
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-dark" (click)="organicDryFruit()"><h4> Dry Fruits  </h4></a>
+    </li>
+    
+   
+  </ul>
+  <!-- Links -->
+
+</div>
 
 </ion-content>

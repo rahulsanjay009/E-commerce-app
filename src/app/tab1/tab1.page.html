@@ -1,22 +1,25 @@
 <ion-header class="dusty-grass-gradient">
-  <div align=center  style="line-height: 1.2rem; color:black;  font-family: 'Baloo Tamma 2', cursive; padding-top:15px;">
-    <span  style="color:black; font-weight: 600; ">  Vijaya Vinayaka Organics </span>
-    <p style="font-size: 10px;">Be Organic. Be Healthy. Be You.</p>
-  </div>    
+  <ion-row>
+    <ion-col size=4>
+      <img src="https://res.cloudinary.com/dmm4awbwm/image/upload/v1588358696/vinayaka_gdj0qc.jpg" style="height:65px; padding:5%">
+    </ion-col>
+    <ion-col size=8>
+      <div  style="line-height: 1.2rem; color:black;  font-family: 'Baloo Tamma 2', cursive; padding-top:15px;">
+        <span  style="color:black; font-weight: 600; ">  Vijaya Vinayaka Organics </span>
+        <p style="font-size: 10px; margin-left: 8%;">Be Organic. Be Healthy. Be You.</p>
+      </div>  
+    </ion-col>
+  </ion-row>
+    
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-card  >
-    <ion-row >
-        <ion-col size=6 align=center>
-            <img src="https://res.cloudinary.com/dmm4awbwm/image/upload/v1588358696/vinayaka_gdj0qc.jpg" style="height:180px; padding:5%">
-        </ion-col>
-        <ion-col size=6 style=" color:black; font-family: 'Baloo Tamma 2', cursive; " align=center class="dusty-grass-gradient">
-            <br><br>
-            <span style="font-size:12px ;">   Chemicals and pesticides free crop consumption will save your health, wealth and environment.  </span>
-        </ion-col>
-
-    </ion-row> 
+  <ion-row style=" color:black; font-family: 'Baloo Tamma 2', cursive;" align=center class="dusty-grass-gradient"> 
+    <br><br> 
+    <span style="font-size:12px;" class="stll"> Chemicals and pesticides free crop consumption will save your health, wealth and environment.  </span>
+    <br><br>
+  </ion-row> 
     <ion-row class="dusty-grass-gradient">
       <ol>
         <li>
@@ -28,6 +31,9 @@
         </li>
         <li>
           Orders placed till Thursday evening will be delivered on Friday evening or Saturday Morning.
+        </li>
+        <li>
+          Minimum Orders must be above Rs. 200/-
         </li>
       </ol>
           
@@ -64,7 +70,17 @@
         <p>order now!</p>
       </div></a>
     </div>
-    
+    <div class="carousel-item">
+      <!--Mask color-->
+      <div class="view">
+        <img class="d-block w-100" src="assets/groceries.jpg" height=200px alt="third slide">
+        <div class="mask rgba-black-light"></div>
+      </div>
+      <a (click)="organicGroceries()">  <div class="carousel-caption">
+        <h3 class="h3-responsive" style="font-size:medium">Organic Groceries</h3>
+        <p>order now!</p>
+      </div></a>
+    </div>
   </div>
   <!--/.Slides-->
   <!--Controls-->
@@ -80,6 +96,6 @@
 </div>
 <!--/.Carousel Wrapper-->
       
-    </ion-row>
+</ion-row>
     
 </ion-content>

@@ -1,4 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@500&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Merienda:wght@700&family=Patrick+Hand&family=Satisfy&family=Shadows+Into+Light&family=Tangerine:wght@700&display=swap');
+.stll{
+padding-left:10%;
+padding-right:10%;
+font-family: 'Merienda', cursive;
+color:black;
+font-weight: 700;
+}
 ion-content ion-toolbar {
   --background: translucent;
 }
@@ -12,10 +21,7 @@ ion-button{
   
 }
 
-.carz{
-  box-shadow: 0 0 2px 2px rgba(0,0,0,0.2);
-  border-radius:0.3rem;
-}
+
 ion-icon{
   font-size:20px;
 }

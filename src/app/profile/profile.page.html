@@ -7,7 +7,7 @@
       </ion-col>
       <ion-col size=10  style="margin-left:-7%;">
         <div style=" color:black;  font-family: 'Baloo Tamma 2', cursive; padding:10px; font-size:18px">
-          <span  style="color:black; font-weight: 600; ">  Contact Us </span>
+          <span  style="color:black; font-weight: 600; ">  My Profile </span>
           
         </div>    
       </ion-col>
@@ -32,7 +32,7 @@
     
     <ion-item>
       <ion-label position=floating>Phone</ion-label>
-      <ion-input type="text" [(ngModel)]="user.phoneNumber" name="phone"></ion-input>
+      <ion-input type="text" [(ngModel)]="user.phoneNumber" name="phone" [disabled]=true></ion-input>
     </ion-item>
     <br>
     <ion-label position=floating style="margin-left:10%; margin-bottom: 3%; color:lightgreen; font-family: 'Baloo Tamma 2', cursive;">Address</ion-label>
@@ -47,6 +47,12 @@
     <ion-item>
       <ion-label position=floating>street2</ion-label>
       <ion-input type="text" [(ngModel)]="address.street2" name="street2"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position=floating>Location</ion-label>
+      <ion-select placeholder="{{address.location}}" [(ngModel)]="address.location" name="location" (ngModelChange)="call()">
+        <ion-select-option *ngFor="let i of location" [value]="i">{{i}}</ion-select-option>        
+      </ion-select>
     </ion-item>
     <ion-item>
       <ion-label position=floating>City</ion-label>

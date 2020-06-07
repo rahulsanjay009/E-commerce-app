@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {CallNumber} from '@ionic-native/call-number/ngx';
+import { ModalController } from '@ionic/angular';
+import { OurstoryComponent } from '../ourstory/ourstory.component';
+import { ReviewsComponent } from '../reviews/reviews.component';
 @Component({
   selector: 'app-contact-us',
   templateUrl: './contact-us.page.html',
@@ -7,7 +10,7 @@ import {CallNumber} from '@ionic-native/call-number/ngx';
 })
 export class ContactUsPage implements OnInit {
 
-  constructor(private callNumber:CallNumber) { }
+  constructor(private callNumber:CallNumber,private modalCtrl:ModalController) { }
 
   ngOnInit() {
   }
@@ -16,4 +19,15 @@ call(){
     console.log("call initiated");
   })
 }
+aboutus(){
+    this.modalCtrl.create({component:OurstoryComponent}).then((da)=>{
+      da.present();
+    })
+}
+reviews(){
+  this.modalCtrl.create({component:ReviewsComponent}).then((da)=>{
+    da.present();
+  })
+}
+
 }

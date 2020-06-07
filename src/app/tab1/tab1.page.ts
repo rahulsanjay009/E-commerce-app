@@ -33,7 +33,9 @@ organicVegetable(){
 organicFruit(){
 this.router.navigate(['tabs/categories/',"organic fruit"]);
 }
-
+organicGroceries(){
+  this.router.navigate(['tabs/categories/',"organic grocery"]);
+}
 
 
 ionViewDidEnter(){

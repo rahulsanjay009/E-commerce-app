@@ -3,6 +3,7 @@ export class Item{
     cost:string;
     amount:string;
     qty:number=0;
+    subqty?:number;
     imgUrl:string;
     category:string;
     timestamp:string;
@@ -10,4 +11,5 @@ export class Item{
     deliveredTimestamp?:string;
     delivered?:boolean;
     state?:boolean;
+    leafy?:string;
 }

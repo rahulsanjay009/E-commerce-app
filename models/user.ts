@@ -10,4 +10,5 @@ export class User{
         uid?:string;
         confirmedOrders?:Item[];
         wishlist?:string[];
+        paymentMode?:string;
 }

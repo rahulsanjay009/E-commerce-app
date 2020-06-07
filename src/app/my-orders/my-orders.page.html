@@ -18,76 +18,66 @@
   <ion-text *ngIf="items==undefined" style="font-style: italic; font-size: 15px;" align=center>
     <h3 > {{displayMsg}} </h3>
   </ion-text>
-  <ion-card *ngFor="let item of items">
-    <ion-row *ngIf="!item.delivered">
-        <ion-col size=3>
-          <img [src]="item.imgUrl" height=100% width=100% style="padding-top:20%;">
-        </ion-col>
-        <ion-col size=9 style="font-size: 15px; padding-left:3%">
-            
-            <ion-row>
-              <ion-col size=6> 
-                <h3 style="margin-bottom:2%">{{ item.name}} </h3> 
-                <p style="margin-bottom:2%">{{ item.amount}} </p>
-               
-              </ion-col>
-              <ion-col size=6> <br>
-                QTY: {{item.qty}}    <br>
-                Price: {{" ₹ "+item.cost*item.qty +" /-"}} <br>
-                
-                  
-              </ion-col>
-            </ion-row>
-            Ordered On &nbsp;  &nbsp;  {{item.orderedTimestamp.split(",")[0]}} &nbsp; &nbsp;     {{item.orderedTimestamp.split(",")[1]}} <br>
-            <span *ngIf="!item.delivered">  Your order is on the way </span>
-            <span *ngIf="item.delivered">Delivered On &nbsp; {{item.deliveredTimestamp.split(",")[0]}} &nbsp;  {{item.deliveredTimestamp.split(",")[1]}}</span>
-        </ion-col>
-    </ion-row>
-    
-</ion-card>
-<ion-card *ngIf="items!=undefined">
-      <ion-row>
-          <ion-col>
-            <h6 style="padding-left:8%">  TOTAL ACTIVE BILL </h6>
-          </ion-col>
-          <ion-col>
-            <h6 style="padding-left:8%"> {{" ₹ "+totalvalue+" /-"}}</h6>
-          </ion-col>
- </ion-row>
-
-   
-</ion-card>
-<br><br>   
-<ion-text *ngIf="items!=undefined" style="font-style: italic; font-size: 15px;" align=center>
-    <h3 > Past Orders </h3>
+  <ion-text *ngIf="items!=undefined" style="font-style: italic; font-size: 15px;" align=center>
+    <h3 > Active Orders :  </h3>
   </ion-text>
+  <ion-row *ngIf="items!=undefined" style="font-weight:700 ;">
+    <ion-col size=3 align=center>  Name      </ion-col>
+    
+    <ion-col size=3 align=center>  quantity    </ion-col>
+    <ion-col size=3 align=center>  unit price      </ion-col>
+    <ion-col size=3 align=center>   Price     </ion-col>
+    
+</ion-row>
+<ion-row *ngFor="let item of items">      
 
-<ion-card *ngFor="let item of items">
+  <ion-col size=3 *ngIf="!item.delivered" align=center> 
+    {{ item.name}} 
+  </ion-col>
+  <ion-col size=3 *ngIf="!item.delivered" align=center>
+    <p style="margin-bottom:2%">{{ item.qty*item.subqty+" "+item.amount.split(' ')[1]}} </p>
    
-  <ion-row *ngIf="item.delivered">
-      <ion-col size=3>
-        <img [src]="item.imgUrl" height=100% width=100% style="padding-top:20%;">
-      </ion-col>
-      <ion-col size=9 style="font-size: 15px; padding-left:3%">
+  </ion-col>
+  <ion-col size=3 *ngIf="!item.delivered" align=center>       {{" ₹ "+item.cost +" /-"}}       </ion-col>
+  <ion-col size=3 *ngIf="!item.delivered" align=center> {{" ₹ "+item.cost*item.qty*item.subqty +" /-"  }}</ion-col>         
+
+</ion-row>
+
+<ion-card *ngIf="items!=undefined">
+  <h6 style="padding-left:8%">  MODE OF PAYMENT &nbsp; &nbsp; &nbsp; {{mode}}</h6> 
+  <h6 style="padding-left:8%">  TOTAL ACTIVE BILL &nbsp; &nbsp; &nbsp; {{" ₹ "+totalvalue+" /-"}}</h6>  
+</ion-card>
+<br>
+<ion-text *ngIf="items!=undefined" style="font-style: italic; font-size: 15px;" align=center>
+  <h3 > Delivered Orders </h3>
+</ion-text>
+<br>
+
+   
+     
+          <ion-row style="font-weight:700 ;" *ngIf="items!=undefined">
+              <ion-col size=3 align=center>  Name      </ion-col>              
+              <ion-col size=3 align=center>  quantity     </ion-col>
+              <ion-col size=3 align=center>   unit price   </ion-col>
+              <ion-col size=3 align=center>   Price     </ion-col>
+              
+          </ion-row>
+      <ion-row *ngFor="let item of items">      
           
-          <ion-row>
-            <ion-col size=6> 
-              <h3 style="margin-bottom:2%">{{ item.name}} </h3> 
-              <p style="margin-bottom:2%">{{ item.amount}} </p>
+            <ion-col size=3 *ngIf="item.delivered" align=center> 
+              {{ item.name}} 
+            </ion-col>
+            <ion-col size=3 *ngIf="item.delivered" align=center>
+              <p style="margin-bottom:2%">{{ item.qty*item.subqty+" "+item.amount.split(' ')[1]}} </p>
              
             </ion-col>
-            <ion-col size=6> <br>
-              QTY: {{item.qty}}    <br>
-              Price: {{" ₹ "+item.cost*item.qty +" /-"}} <br>
-              
-                
-            </ion-col>
-          </ion-row>
-          Ordered On &nbsp;  &nbsp;  {{item.orderedTimestamp.split(",")[0]}} &nbsp; &nbsp;     {{item.orderedTimestamp.split(",")[1]}} <br>
-          <span *ngIf="!item.delivered">  Your order is on the way </span>
-          <span *ngIf="item.delivered">Delivered On &nbsp; {{item.deliveredTimestamp.split(",")[0]}} &nbsp;  {{item.deliveredTimestamp.split(",")[1]}}</span>
-      </ion-col>
+            <ion-col size=3 *ngIf="item.delivered" align=center>       {{" ₹ "+item.cost +" /-"}}       </ion-col>
+            <ion-col size=3 *ngIf="item.delivered" align=center> {{" ₹ "+item.cost*item.qty*item.subqty +" /-"  }}</ion-col>
+          
+                    
+      
   </ion-row>
-  
+  <ion-card>
+  <h6 style="padding-left:8%">  TOTAL BILLED &nbsp; &nbsp; &nbsp; {{" ₹ "+pretotal+" /-"}}</h6>
 </ion-card>
 </ion-content>
